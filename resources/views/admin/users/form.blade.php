@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('content')
+<div class="card"><h1>{{ $user->exists ? 'Edit' : 'Tambah' }} User</h1><form method="post" action="{{ $user->exists ? route('admin.users.update',$user) : route('admin.users.store') }}">@csrf @if($user->exists)@method('put')@endif
+<div class="form-row"><div class="form-group"><label>Nama</label><input name="name" value="{{ old('name',$user->name) }}" required></div><div class="form-group"><label>Email</label><input type="email" name="email" value="{{ old('email',$user->email) }}" required></div></div>
+<div class="form-row"><div class="form-group"><label>Password {{ $user->exists ? '(kosongkan jika tidak diganti)' : '' }}</label><input type="password" name="password" {{ $user->exists ? '' : 'required' }}></div><div class="form-group"><label>Role</label><select name="role"><option value="admin" @selected(old('role',$user->role)==='admin')>Admin</option><option value="user" @selected(old('role',$user->role ?: 'user')==='user')>User</option></select></div></div>
+<div class="form-group"><label>No HP</label><input name="phone" value="{{ old('phone',$user->phone) }}"></div><div class="form-group"><label>Alamat</label><textarea name="address">{{ old('address',$user->address) }}</textarea></div><label><input style="width:auto" type="checkbox" name="status" value="1" @checked(old('status',$user->status ?? true))> Aktif</label><br><br><button class="btn">Simpan</button></form></div>
+@endsection

@@ -1,0 +1,2 @@
+@extends('admin.pdf.layout')
+@section('pdf')<h1>Laporan Data Buku</h1><p class="muted">BookuIn - {{ now()->format('d/m/Y H:i') }}</p><table><tr><th>No</th><th>Judul</th><th>Kategori</th><th>Penulis</th><th>Harga</th><th>Stok</th></tr>@foreach($books as $book)<tr><td>{{ $loop->iteration }}</td><td>{{ $book->title }}</td><td>{{ $book->category?->name }}</td><td>{{ $book->author }}</td><td class="right">{{ number_format($book->price,0,',','.') }}</td><td>{{ $book->stock }}</td></tr>@endforeach</table>@endsection

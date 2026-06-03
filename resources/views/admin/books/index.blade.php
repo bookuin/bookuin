@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('content')
+<div class="actions"><h1 style="flex:1">Data Buku</h1><a class="btn" href="{{ route('admin.books.create') }}">Tambah Buku</a><a class="btn secondary" href="{{ route('admin.categories.index') }}">Kategori</a></div>
+<div class="card"><form><input name="q" placeholder="Cari judul..." value="{{ request('q') }}"></form><br><table class="table"><tr><th>Cover</th><th>Judul</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Aksi</th></tr>@foreach($books as $book)<tr><td>@if($book->cover)<img class="cover" src="{{ asset('storage/'.$book->cover) }}">@endif</td><td><strong>{{ $book->title }}</strong><br><span class="muted">{{ $book->author }}</span></td><td>{{ $book->category?->name }}</td><td>Rp {{ number_format($book->price,0,',','.') }}</td><td>{{ $book->stock }}</td><td class="actions"><a class="btn light" href="{{ route('admin.books.edit',$book) }}">Edit</a><form method="post" action="{{ route('admin.books.destroy',$book) }}">@csrf @method('delete')<button class="btn danger" onclick="return confirm('Hapus?')">Hapus</button></form></td></tr>@endforeach</table>{{ $books->links() }}</div>
+@endsection

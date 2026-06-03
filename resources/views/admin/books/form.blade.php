@@ -1,0 +1,8 @@
+@extends('layouts.app')
+@section('content')
+<div class="card"><h1>{{ $book->exists ? 'Edit' : 'Tambah' }} Buku</h1><form method="post" enctype="multipart/form-data" action="{{ $book->exists ? route('admin.books.update',$book) : route('admin.books.store') }}">@csrf @if($book->exists)@method('put')@endif
+<div class="form-row"><div class="form-group"><label>Judul</label><input name="title" value="{{ old('title',$book->title) }}" required></div><div class="form-group"><label>Kategori</label><select name="category_id"><option value="">-</option>@foreach($categories as $cat)<option value="{{ $cat->id }}" @selected(old('category_id',$book->category_id)==$cat->id)>{{ $cat->name }}</option>@endforeach</select></div></div>
+<div class="form-row"><div class="form-group"><label>Penulis</label><input name="author" value="{{ old('author',$book->author) }}"></div><div class="form-group"><label>Penerbit</label><input name="publisher" value="{{ old('publisher',$book->publisher) }}"></div><div class="form-group"><label>Tahun</label><input name="year" value="{{ old('year',$book->year) }}"></div></div>
+<div class="form-row"><div class="form-group"><label>Harga</label><input type="number" name="price" value="{{ old('price',$book->price) }}" required></div><div class="form-group"><label>Stok</label><input type="number" name="stock" value="{{ old('stock',$book->stock ?? 0) }}" required></div><div class="form-group"><label>Cover</label><input type="file" name="cover"></div></div>
+<div class="form-group"><label>Deskripsi</label><textarea name="description">{{ old('description',$book->description) }}</textarea></div><button class="btn">Simpan</button></form></div>
+@endsection

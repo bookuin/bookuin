@@ -1,0 +1,5 @@
+@extends('layouts.app')
+@section('content')
+<h1>Keranjang</h1>
+<div class="card"><table class="table"><tr><th>Buku</th><th>Harga</th><th>Qty</th><th>Total</th><th>Aksi</th></tr>@php($grand=0)@foreach($items as $item)@php($grand += $item['total'])<tr><td>{{ $item['book']->title }}</td><td>Rp {{ number_format($item['book']->price,0,',','.') }}</td><td><form method="post" action="{{ route('user.cart.update',$item['book']) }}">@csrf @method('patch')<input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" style="width:90px"><button class="btn light">Update</button></form></td><td>Rp {{ number_format($item['total'],0,',','.') }}</td><td><form method="post" action="{{ route('user.cart.remove',$item['book']) }}">@csrf @method('delete')<button class="btn danger">Hapus</button></form></td></tr>@endforeach<tr><th colspan="3">Subtotal</th><th colspan="2">Rp {{ number_format($grand,0,',','.') }}</th></tr></table><br>@if(count($items)>0)<a class="btn" href="{{ route('user.checkout') }}">Checkout</a>@endif</div>
+@endsection
